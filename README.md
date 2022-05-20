@@ -37,11 +37,3 @@ flutter clean
 flutter pub get
 flutter build apk
 flutter install
-<<<<<<< HEAD
-```
-
-
-
-=======
-```
->>>>>>> fac2bbe (update app)
