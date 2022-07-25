@@ -1,18 +1,37 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_format_money_vietnam/flutter_format_money_vietnam.dart';
 
-class TransactionItem extends StatelessWidget {
-  const TransactionItem(
-    this._userTransaction,
-    this.deleteTransaction,
-    this.index,
-  );
+class TransactionItem extends StatefulWidget {
+  const TransactionItem(this._Transaction, this.deleteTransaction,
+      {required UniqueKey key});
 
-  final List<Transaction> _userTransaction;
+  final Transaction _Transaction;
   final Function deleteTransaction;
-  final int index;
+
+  @override
+  State<TransactionItem> createState() => _TransactionItemState();
+}
+
+class _TransactionItemState extends State<TransactionItem> {
+  // Colors? _bgColors;
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   const avaiableColors = [
+  //     Colors.blue,
+  //     Colors.black,
+  //     Colors.pink,
+  //     Colors.purple,
+  //   ];
+
+  //   _bgColors = avaiableColors[Random().nextInt(4)] as Colors;
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -33,21 +52,21 @@ class TransactionItem extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.none,
                 child: Text(
-                  _userTransaction[index].amount.toStringAsFixed(0).toVND(),
+                  widget._Transaction.amount.toStringAsFixed(0).toVND(),
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 15, color: Colors.white),
                 ),
               ),
             ),
           ),
-          title: Text(_userTransaction[index].title),
+          title: Text(widget._Transaction.title),
           subtitle: Text(
-            DateFormat.yMMMd().format(_userTransaction[index].date),
+            DateFormat.yMMMd().format(widget._Transaction.date),
           ),
           trailing: MediaQuery.of(context).size.width > 380
               ? TextButton.icon(
                   onPressed: () =>
-                      deleteTransaction(_userTransaction[index].id),
+                      widget.deleteTransaction(widget._Transaction.id),
                   label: const Text(
                     'Delete',
                     style: TextStyle(color: Colors.red),
@@ -59,7 +78,7 @@ class TransactionItem extends StatelessWidget {
                 )
               : IconButton(
                   onPressed: () =>
-                      deleteTransaction(_userTransaction[index].id),
+                      widget.deleteTransaction(widget._Transaction.id),
                   icon: const Icon(Icons.delete),
                 ),
         ),

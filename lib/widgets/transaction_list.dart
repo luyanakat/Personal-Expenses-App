@@ -13,28 +13,39 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _userTransaction.isEmpty
-        ? SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    child: Image.asset('assets/images/emptylist.png')),
-                Text(
-                  'Hiện tại List đang trống ạ !!',
-                  style: TextStyle(
-                    fontSize: 18 * MediaQuery.of(context).textScaleFactor,
-                  ),
+            ? SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: Image.asset('assets/images/emptylist.png'),
+                    ),
+                    Text(
+                      'Hiện tại List đang trống ạ !!',
+                      style: TextStyle(
+                        fontSize: 18 * MediaQuery.of(context).textScaleFactor,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          )
-        : ListView.builder(
-            itemBuilder: ((context, index) {
-              return TransactionItem(
-                  _userTransaction, deleteTransaction, index);
-            }),
-            itemCount: _userTransaction.length,
-          );
+              )
+            : ListView(
+                children: [
+                  ..._userTransaction.map((tx) {
+                    return TransactionItem(
+                      tx,
+                      deleteTransaction,
+                      key: UniqueKey(),
+                    );
+                  }).toList(),
+                ],
+              ) //  ListView.builder(
+        //     itemBuilder: ((context, index) {
+        //       return TransactionItem(
+        //           _userTransaction[index], deleteTransaction);
+        //     }),
+        //     itemCount: _userTransaction.length,
+        ;
   }
 }
