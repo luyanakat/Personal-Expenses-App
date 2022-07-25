@@ -9,7 +9,7 @@ import './widgets/add_new_transacion.dart';
 import './widgets/chart.dart';
 
 void main() {
-  // A Feature to best Reponstive: Lock Landscape mod :))
+  // A Feature to best Reponstive: Lock Landscape mode :))
   // WidgetsFlutterBinding.ensureInitialized();
 
   // SystemChrome.setPreferredOrientations([
