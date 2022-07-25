@@ -88,6 +88,65 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Widget _buildLandScapeContent(mediaQuery, appBar) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Show Chart',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Switch.adaptive(
+              activeColor: Theme.of(context).primaryColor,
+              value: _showChart,
+              onChanged: (val) {
+                setState(() {
+                  _showChart = val;
+                });
+              },
+            ),
+          ],
+        ),
+        _showChart == true
+            ? SizedBox(
+                height: (mediaQuery.size.height -
+                        appBar.preferredSize.height -
+                        mediaQuery.padding.top) *
+                    0.6, // 0,25
+                child: Chart(_recentTransaction))
+            : SizedBox(
+                height: (mediaQuery.size.height -
+                        appBar.preferredSize.height -
+                        mediaQuery.padding.top) *
+                    0.6, //0.75
+                child: TransactionList(_transaction, deleteTX),
+              ),
+      ],
+    );
+  }
+
+  Widget _buildPortraitContent(mediaQuery, appBar) {
+    return Column(
+      children: [
+        SizedBox(
+            height: (mediaQuery.size.height -
+                    appBar.preferredSize.height -
+                    mediaQuery.padding.top) *
+                0.25, // 0,25
+            child: Chart(_recentTransaction)),
+        SizedBox(
+          height: (mediaQuery.size.height -
+                  appBar.preferredSize.height -
+                  mediaQuery.padding.top) *
+              0.75, //0.75
+          child: TransactionList(_transaction, deleteTX),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -101,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 GestureDetector(
                   child: const Icon(CupertinoIcons.add),
                   onTap: () => _showAddNewTxBottom(context),
-                )
+                ),
               ],
             ),
           )
@@ -112,59 +171,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final pageBody = SafeArea(
       child: SingleChildScrollView(
         child: isLandscape == true
-            ? Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Show Chart',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      Switch.adaptive(
-                        activeColor: Theme.of(context).primaryColor,
-                        value: _showChart,
-                        onChanged: (val) {
-                          setState(() {
-                            _showChart = val;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  _showChart == true
-                      ? SizedBox(
-                          height: (mediaQuery.size.height -
-                                  appBar.preferredSize.height -
-                                  mediaQuery.padding.top) *
-                              0.6, // 0,25
-                          child: Chart(_recentTransaction))
-                      : SizedBox(
-                          height: (mediaQuery.size.height -
-                                  appBar.preferredSize.height -
-                                  mediaQuery.padding.top) *
-                              0.6, //0.75
-                          child: TransactionList(_transaction, deleteTX),
-                        ),
-                ],
-              )
-            : Column(
-                children: [
-                  SizedBox(
-                      height: (mediaQuery.size.height -
-                              appBar.preferredSize.height -
-                              mediaQuery.padding.top) *
-                          0.25, // 0,25
-                      child: Chart(_recentTransaction)),
-                  SizedBox(
-                    height: (mediaQuery.size.height -
-                            appBar.preferredSize.height -
-                            mediaQuery.padding.top) *
-                        0.75, //0.75
-                    child: TransactionList(_transaction, deleteTX),
-                  ),
-                ],
-              ),
+            ? _buildLandScapeContent(mediaQuery, appBar)
+            : _buildPortraitContent(mediaQuery, appBar),
       ),
     );
     return MaterialApp(
