@@ -17,21 +17,21 @@ class TransactionItem extends StatefulWidget {
 }
 
 class _TransactionItemState extends State<TransactionItem> {
-  // Colors? _bgColors;
+  Color? _bgColors;
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   const avaiableColors = [
-  //     Colors.blue,
-  //     Colors.black,
-  //     Colors.pink,
-  //     Colors.purple,
-  //   ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    const avaiableColors = [
+      Colors.blue,
+      Colors.black,
+      Colors.pink,
+      Colors.purple,
+    ];
 
-  //   _bgColors = avaiableColors[Random().nextInt(4)] as Colors;
-  //   super.initState();
-  // }
+    _bgColors = avaiableColors[Random().nextInt(4)];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _TransactionItemState extends State<TransactionItem> {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.teal),
               borderRadius: BorderRadius.circular(15),
-              color: Colors.teal,
+              color: _bgColors,
             ),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
